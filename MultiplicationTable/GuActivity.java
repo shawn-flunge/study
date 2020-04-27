@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
-import javax.xml.datatype.Duration;
 
 public class GuActivity extends AppCompatActivity {
 
@@ -71,12 +70,9 @@ public class GuActivity extends AppCompatActivity {
         btnEnter = (Button)findViewById(R.id.btnEnter);
 
 
-
-
-
-        n1=RANDOM.nextInt();
-        n2=RANDOM.nextInt();
-        questStr = n1 +" * " +n2;
+        n1=RANDOM.nextInt(10);
+        n2=RANDOM.nextInt(10);
+        questStr = String.valueOf(n1) +" * " +String.valueOf(n2);
 
         questText.setText(questStr);
 
@@ -86,6 +82,7 @@ public class GuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 clickNumber(0);
+
             }
         });
 
@@ -155,67 +152,79 @@ public class GuActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputText.setText(null);
+                inputText.setText("");
             }
         });
 
+
         btnEnter.setOnClickListener(new View.OnClickListener() {
+
 
             @Override
             public void onClick(View v) {
                 editable = inputText.getText();
+                String str = editable.toString();
+                int i = Integer.parseInt(str);
 
-                if(Integer.valueOf(editable.toString())== (n1*n2) )
+                String str2;
+                if( i==(n1*n2) )
                 {
                     count++;
-                    Toast.makeText(getApplicationContext(),"딩동댕", Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(),"딩동댕", Toast.LENGTH_SHORT).show();
                 }
                 else
-                    Toast.makeText(getApplicationContext(),"땡", Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(),"땡", Toast.LENGTH_SHORT).show();
 
-                numText.setText(count);
+                str2= String.valueOf(count);
+                numText.setText(str2);
                 resetObj();
             }
         });
 
-        Thread t1 = new Thread(new Runnable() {
-            int sec=0;
-            @Override
-            public void run() {
-                while (sec < 61)
-                    sec++;
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                }
-                progressBar.setProgress(sec);
-            }
-        });
-
-        t1.start();
-        if(progressBar.getProgress()==60)
-        {
-            intent.putExtra("correctCount",count);
-            setResult(1,intent);
-            finish();
-        }
+//        Thread t1 = new Thread(new Runnable() {
+//            int sec=0;
+//            @Override
+//            public void run() {
+//                while (sec < 61)
+//                    sec++;
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (Exception e) {
+//                }
+//                progressBar.setProgress(sec);
+//            }
+//        });
+//
+//        t1.start();
+//        if(progressBar.getProgress()==60)
+//        {
+//            intent.putExtra("correctCount",count);
+//            setResult(1,intent);
+//            finish();
+//        }
 
     }
 
 
     public void clickNumber(int n)
     {
-        inputText.setText(n);
+        editable = inputText.getText();
+        String temp = editable.toString();
+
+        String str = String.valueOf(n);
+        temp = temp + str;
+        inputText.setText(temp);
     }
 
     public void resetObj()
     {
-        questText.setText("");
-        inputText.setText("");
-        n1=RANDOM.nextInt();
-        n2=RANDOM.nextInt();
-        questStr = n1 +" * " +n2;
+        questText.setText(null);
+        inputText.setText(null);
 
+        n1=RANDOM.nextInt(10);
+        n2=RANDOM.nextInt(10);
+
+        questStr = n1 +" * " +n2;
         questText.setText(questStr);
     }
 
