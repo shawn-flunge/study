@@ -9,12 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button startBtn;
     private TextView ans1;
 
+    static Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +28,12 @@ public class MainActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),GuActivity.class);
+                intent = new Intent(getApplicationContext(),GuActivity.class);
                 startActivityForResult(intent,1);
                 //startActivity(intent);
             }
         });
+
 
     }
 
@@ -40,11 +43,14 @@ public class MainActivity extends AppCompatActivity {
 
         if(requestCode == 1)
         {
-            if(resultCode== Activity.RESULT_OK)
+
+            if(resultCode==Activity.RESULT_OK)
             {
-                String str = data.getStringExtra("correctCount");
+                String str = data.getExtras().getString("correctCount");
+                Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
                 ans1.setText(str);
             }
+            
         }
 
     }

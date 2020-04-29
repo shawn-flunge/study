@@ -44,12 +44,14 @@ public class GuActivity extends AppCompatActivity {
     static int count = 0;
     static String questStr;
 
+    static Intent intent = new Intent();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gugu);
 
-        Intent intent = getIntent();
+        //intent = getIntent();
 
         questText = (TextView)findViewById(R.id.questText);
         numText = (TextView)findViewById(R.id.numText);
@@ -70,11 +72,7 @@ public class GuActivity extends AppCompatActivity {
         btnEnter = (Button)findViewById(R.id.btnEnter);
 
 
-        n1=RANDOM.nextInt(10);
-        n2=RANDOM.nextInt(10);
-        questStr = String.valueOf(n1) +" * " +String.valueOf(n2);
-
-        questText.setText(questStr);
+        setNum();
 
 
 
@@ -181,27 +179,30 @@ public class GuActivity extends AppCompatActivity {
             }
         });
 
-//        Thread t1 = new Thread(new Runnable() {
-//            int sec=0;
-//            @Override
-//            public void run() {
-//                while (sec < 61)
-//                    sec++;
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (Exception e) {
-//                }
-//                progressBar.setProgress(sec);
-//            }
-//        });
-//
-//        t1.start();
-//        if(progressBar.getProgress()==60)
-//        {
-//            intent.putExtra("correctCount",count);
-//            setResult(1,intent);
-//            finish();
-//        }
+        Thread t1 = new Thread(new Runnable() {
+            int sec=0;
+            String str;
+            @Override
+            public void run() {
+                while (true)
+                {
+                    sec++;
+                    try {
+                        Thread.sleep(1000);
+                    }
+                    catch (Exception e) {}
+                    progressBar.setProgress(sec);
+                    if(sec ==10) break;
+                }
+                str = String.valueOf(count);
+                intent.putExtra("correctCount",str);
+                setResult(RESULT_OK,intent);
+                count=0;
+                finish();
+            }
+        });
+
+        t1.start();
 
     }
 
@@ -220,13 +221,17 @@ public class GuActivity extends AppCompatActivity {
     {
         questText.setText(null);
         inputText.setText(null);
+        setNum();
+    }
 
-        n1=RANDOM.nextInt(10);
-        n2=RANDOM.nextInt(10);
+    public void setNum(){
+        n1=(RANDOM.nextInt(9)+1);
+        n2=(RANDOM.nextInt(9)+1);
 
         questStr = n1 +" * " +n2;
         questText.setText(questStr);
     }
+
 
 
 }
