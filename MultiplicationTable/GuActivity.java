@@ -1,6 +1,5 @@
 package com.example.homework;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,12 +9,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.Random;
-
 
 public class GuActivity extends AppCompatActivity {
 
@@ -41,7 +37,7 @@ public class GuActivity extends AppCompatActivity {
     static Editable editable;
     static int n1;
     static int n2;
-    static int count = 0;
+    static int count;
     static String questStr;
 
     static Intent intent = new Intent();
@@ -51,30 +47,29 @@ public class GuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gugu);
 
-        //intent = getIntent();
+        intent = getIntent();
 
-        questText = (TextView)findViewById(R.id.questText);
-        numText = (TextView)findViewById(R.id.numText);
-        inputText = (EditText)findViewById(R.id.inputText);
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        questText = findViewById(R.id.questText);
+        numText = findViewById(R.id.numText);
+        inputText = findViewById(R.id.inputText);
+        progressBar = findViewById(R.id.progressBar);
 
-        btn0 = (Button)findViewById(R.id.btn0);
-        btn1 = (Button)findViewById(R.id.btn1);
-        btn2 = (Button)findViewById(R.id.btn2);
-        btn3 = (Button)findViewById(R.id.btn3);
-        btn4 = (Button)findViewById(R.id.btn4);
-        btn5 = (Button)findViewById(R.id.btn5);
-        btn6 = (Button)findViewById(R.id.btn6);
-        btn7 = (Button)findViewById(R.id.btn7);
-        btn8 = (Button)findViewById(R.id.btn8);
-        btn9 = (Button)findViewById(R.id.btn9);
-        btnCancel = (Button)findViewById(R.id.btnCancel);
-        btnEnter = (Button)findViewById(R.id.btnEnter);
+        btn0 = findViewById(R.id.btn0);
+        btn1 = findViewById(R.id.btn1);
+        btn2 = findViewById(R.id.btn2);
+        btn3 = findViewById(R.id.btn3);
+        btn4 = findViewById(R.id.btn4);
+        btn5 = findViewById(R.id.btn5);
+        btn6 = findViewById(R.id.btn6);
+        btn7 = findViewById(R.id.btn7);
+        btn8 = findViewById(R.id.btn8);
+        btn9 = findViewById(R.id.btn9);
+        btnCancel = findViewById(R.id.btnCancel);
+        btnEnter = findViewById(R.id.btnEnter);
 
-
+        count=0;
+        numText.setText(String.valueOf(count));
         setNum();
-
-
 
         btn0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,29 +148,31 @@ public class GuActivity extends AppCompatActivity {
                 inputText.setText("");
             }
         });
-
-
+        
         btnEnter.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View v) {
-                editable = inputText.getText();
-                String str = editable.toString();
-                int i = Integer.parseInt(str);
+                try {
+                    editable = inputText.getText();
+                    String str = editable.toString();
+                    int i = Integer.parseInt(str);
 
-                String str2;
-                if( i==(n1*n2) )
-                {
-                    count++;
-                    Toast.makeText(getApplicationContext(),"딩동댕", Toast.LENGTH_SHORT).show();
+                    String str2;
+                    if( i==(n1*n2) )
+                    {
+                        count++;
+                        Toast.makeText(getApplicationContext(),"딩동댕", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                        Toast.makeText(getApplicationContext(),"땡", Toast.LENGTH_SHORT).show();
+
+                    str2= String.valueOf(count);
+                    numText.setText(str2);
+                    setNum();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "숫자를 입력하세요", Toast.LENGTH_SHORT).show();
                 }
-                else
-                    Toast.makeText(getApplicationContext(),"땡", Toast.LENGTH_SHORT).show();
-
-                str2= String.valueOf(count);
-                numText.setText(str2);
-                resetObj();
+                
             }
         });
 
@@ -192,12 +189,12 @@ public class GuActivity extends AppCompatActivity {
                     }
                     catch (Exception e) {}
                     progressBar.setProgress(sec);
-                    if(sec ==10) break;
+                    if(sec ==60)
+                        break;
                 }
                 str = String.valueOf(count);
                 intent.putExtra("correctCount",str);
                 setResult(RESULT_OK,intent);
-                count=0;
                 finish();
             }
         });
@@ -217,14 +214,9 @@ public class GuActivity extends AppCompatActivity {
         inputText.setText(temp);
     }
 
-    public void resetObj()
-    {
+    public void setNum(){
         questText.setText(null);
         inputText.setText(null);
-        setNum();
-    }
-
-    public void setNum(){
         n1=(RANDOM.nextInt(9)+1);
         n2=(RANDOM.nextInt(9)+1);
 
