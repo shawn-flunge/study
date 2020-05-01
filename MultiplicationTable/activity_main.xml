@@ -6,36 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ans1"
-        android:text="1111111111111111"
-        android:textSize="40dp"
+        android:id="@+id/listView"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="50dp"
         />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ans2"
-        android:text="22222222222222"
-        android:textSize="40dp"
-        app:layout_constraintTop_toBottomOf="@id/ans1"
-        android:layout_marginTop="50dp"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ans3"
-        android:text="33333333333333333"
-        android:textSize="40dp"
-        app:layout_constraintTop_toBottomOf="@id/ans2"
-        android:layout_marginTop="50dp"
-        />
-
 
     <Button
         android:layout_width="match_parent"
@@ -43,7 +20,7 @@
         android:id="@+id/startBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="100dp"
-        android:text="start gugudan"
+        android:text="START GUGUDAN"
         android:textSize="30dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
